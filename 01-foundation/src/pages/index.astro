@@ -1,0 +1,27 @@
+---
+import MainLayout from "../layouts/MainLayout.astro"
+
+const name = "Emilio Esteban del Hierro Herrera"
+const title = "Home Page"
+---
+<MainLayout title="Home Page">
+
+	<h1>{name}</h1>
+	<p>Momento Actual: {new Date().toLocaleTimeString()}</p>
+	<p id="current-time">Momento Actual Real:</p>
+	
+	<footer>
+		
+	</footer>
+	<script>
+		const footer = document.querySelector('footer') as HTMLElement
+		const currentTimeParagraph = document.querySelector('#current-time') as HTMLParagraphElement
+		
+		const currentYear: number = new Date().getFullYear()
+		footer.innerText = `Año: ${currentYear}` 
+		
+		currentTimeParagraph.innerText = `Momento Actual Real: ${new Date().toLocaleTimeString()}`
+		
+		</script>
+
+</MainLayout>

@@ -110,3 +110,55 @@ const { title } = Astro.props;
 <!-- Use a template directive to build class names from multiple strings or even objects! -->
 <p class:list={["add", "dynamic", {classNames: true}]} />
 ```
+
+
+# Generar rutas dinámicas dinámicamente
+
+## getStaticPaths
+En Astro, getStaticPaths es una función especial que se utiliza para generar rutas estáticas dinámicamente. Esta función es particularmente útil cuando necesitas crear múltiples páginas estáticas basadas en datos dinámicos, como una lista de productos, artículos de blog, etc.
+
+Explicación detallada de cómo funciona getStaticPaths:
+
+1. Definición de la función: getStaticPaths se define como una exportación en un componente Astro. Esta función devuelve un array de objetos, donde cada objeto contiene un campo params con los valores dinámicos que se utilizarán para generar las rutas estáticas.
+
+2. Uso de params: Dentro de getStaticPaths, se define los parámetros dinámicos que se pasarán a las rutas. En el ejemplo, los parámetros son los nombres de los Pokémon (bulbasaur, ivysaur, venusaur).
+
+3. Generación de rutas: Astro utiliza los valores de params para generar las rutas estáticas correspondientes. En este caso, se generarán las rutas /bulbasaur, /ivysaur, y /venusaur.
+
+4. Satisfacción del tipo GetStaticPaths: La función getStaticPaths debe satisfacer el tipo GetStaticPaths para asegurar que devuelve los datos en el formato correcto.
+
+## params
+En Astro, params es un objeto que se utiliza para pasar parámetros dinámicos a las rutas estáticas generadas por el método getStaticPaths. Estos parámetros permiten crear páginas dinámicas basadas en datos específicos, como identificadores, nombres, o cualquier otro valor que se necesite para generar contenido único para cada página.
+
+1. Definición de rutas estáticas: El método getStaticPaths devuelve un array de objetos, donde cada objeto contiene un campo params. Este campo params define los parámetros dinámicos que se utilizarán para generar las rutas estáticas.
+
+2. Uso de params: En el ejemplo, params contiene un objeto con una propiedad name. Los valores de name son 'bulbasaur', 'ivysaur', y 'venusaur'. Esto significa que Astro generará páginas estáticas para estas rutas específicas.
+
+3. Generación de rutas: Basado en los valores de params, Astro generará las siguientes rutas:
+* `/bulbasaur`
+* `/ivysaur`
+* `/venusaur`
+
+Ejemplo: 
+
+```javascript
+---
+import type { GetStaticPaths } from "astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+
+// Definición de rutas estáticas con parámetros dinámicos
+export const getStaticPaths = (() => {
+    return [
+        { params: { name: 'bulbasaur' } }, // Ruta: /bulbasaur
+        { params: { name: 'ivysaur' } },   // Ruta: /ivysaur
+        { params: { name: 'venusaur' } },  // Ruta: /venusaur
+    ];
+}) satisfies GetStaticPaths;
+---
+
+<MainLayout title="Algun pokemon">
+    <h1>Hola</h1>
+</MainLayout>
+```
+
+# Paginación con Astro
